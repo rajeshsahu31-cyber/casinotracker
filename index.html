@@ -30,7 +30,7 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 .stats span{display:block;color:#9eb4c8;font-size:8px}.stats b{font-size:12px}
 .progress{height:5px;background:#18344d;border-radius:7px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:#21d16b}
 .cycles{display:grid;grid-template-columns:1fr 1fr;gap:5px}.cycles button{height:34px;border:0;border-radius:8px;color:#fff;font-size:11px;font-weight:800;position:relative;overflow:hidden;transition:transform .15s,box-shadow .2s}.cycles button:disabled{opacity:.82;cursor:default}.cycles .start:not(:disabled){animation:startPulse 1.05s ease-in-out infinite;box-shadow:0 0 0 0 rgba(16,185,87,.55)}.cycles .stop:not(:disabled){animation:stopPulse 1.05s ease-in-out infinite;box-shadow:0 0 0 0 rgba(239,48,71,.5)}.cycles .start.running{animation:none;box-shadow:none}.cycles button:active{transform:scale(.98)}@keyframes startPulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,87,.45)}50%{box-shadow:0 0 0 6px rgba(16,185,87,0)}}@keyframes stopPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,48,71,.4)}50%{box-shadow:0 0 0 6px rgba(239,48,71,0)}}
-.start{background:#10b957}.start.running{background:#087d3b}.stop{background:#ef3047}.stop:disabled{background:#6d2731;opacity:.55}.cycles .start:not(:disabled)::after{content:'👇 Cycle शुरू करें';position:absolute;right:6px;bottom:3px;font-size:7px;font-weight:900;opacity:.9}.cycles .stop:not(:disabled)::after{content:'👇 Cycle बंद करें';position:absolute;right:6px;bottom:3px;font-size:7px;font-weight:900;opacity:.9}
+.start{background:#10b957}.start.running{background:#087d3b}.stop{background:#ef3047}.stop:disabled{background:#6d2731;opacity:.55}
 .cycles .start:not(:disabled),.cycles .stop:not(:disabled){box-shadow:0 0 0 2px rgba(255,255,255,.35),0 0 16px rgba(255,255,255,.45);animation:cycleHighlight 1.2s ease-in-out infinite}
 @keyframes cycleHighlight{50%{transform:scale(1.025);filter:brightness(1.12)}}
 .quick .qt{font-size:8px;color:#9eb5c9;font-weight:800;margin:0 0 3px 2px}
@@ -284,7 +284,7 @@ function draw(){
  }else{
    $('cycleActionText').textContent='Cycle '+s.cycle+' शुरू करें';
    $('cycleGuide').textContent=s.history.length ? 'पिछला Cycle पूरा हो चुका है। आगे बढ़ने के लिए अगला Cycle शुरू करें।' : 'अभी कोई Cycle शुरू नहीं है। पहले Cycle शुरू करें।';
-   startBtn.textContent='👇 अभी Cycle '+s.cycle+' शुरू करें'; startBtn.disabled=false; startBtn.classList.remove('running');
+   startBtn.textContent='Cycle '+s.cycle+' शुरू करें'; startBtn.disabled=false; startBtn.classList.remove('running');
    stopBtn.disabled=true; stopBtn.textContent='■ Stop Cycle (पहले Cycle शुरू करें)';
  }
 }
