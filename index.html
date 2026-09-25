@@ -6,7 +6,8 @@
 <meta name="theme-color" content="#06192d">
 <title>Cycle Tracker</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
 body{background:#06192d;color:#fff;font-family:Arial,Helvetica,sans-serif}
 button,select,input{font:inherit}
 #app{width:100%;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
@@ -31,12 +32,24 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 .cycles{display:grid;grid-template-columns:1fr 1fr;gap:5px}.cycles button{height:34px;border:0;border-radius:8px;color:#fff;font-size:12px;font-weight:800}
 .start{background:#10b957}.stop{background:#ef3047}
 .quick .qt{font-size:8px;color:#9eb5c9;font-weight:800;margin:0 0 3px 2px}
-.results{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}.results button{height:29px;border:1px solid #476780;border-radius:6px;background:#112a42;color:#fff;font-size:9px;font-weight:800}
+.results{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
+.results button{height:29px;border:1px solid #476780;border-radius:6px;background:#112a42;color:#fff;font-size:9px;font-weight:800}
+.results .win{background:#103c2a;border-color:#2f9d6a}.results .loss{background:#45202a;border-color:#a8505c}
 .betline{border:1px solid #365b76;border-radius:8px;background:#0b233a;padding:5px 8px;display:flex;justify-content:space-between;align-items:center}.betline span{font-size:8px;color:#9fb5c8}.betline b{font-size:13px}
 .tools{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}.tools button{height:33px;border:1px solid #476780;border-radius:8px;background:#112a42;color:#fff;font-size:10px;font-weight:800}
-.modal{position:fixed;inset:0;background:#000b;display:flex;align-items:flex-end;z-index:20}.hide{display:none!important}
-.sheet{width:100%;max-width:520px;margin:auto;background:#0c2138;border:1px solid #3c5b73;border-radius:16px 16px 0 0;padding:10px;max-height:78dvh;overflow:auto}
-.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}.mhead b{font-size:14px}.x{width:31px;height:29px;border:1px solid #55758f;border-radius:6px;background:#162f48;color:#fff;font-size:19px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;z-index:30;padding:18px}
+.hide{display:none!important}
+.dialog{width:min(430px,100%);background:linear-gradient(180deg,#102b45,#081c31);border:1px solid #39739b;border-radius:18px;box-shadow:0 18px 50px #000b;padding:16px;text-align:center;animation:pop .18s ease-out}
+@keyframes pop{from{transform:scale(.92);opacity:.2}to{transform:scale(1);opacity:1}}
+.dialogIcon{font-size:40px;line-height:1;margin:2px 0 8px}
+.dialogTitle{font-size:18px;font-weight:900;margin-bottom:7px}
+.dialogText{font-size:12px;line-height:1.45;color:#c8d8e5;white-space:pre-line}
+.dialogBtns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:13px}
+.dialogBtns button{height:38px;border:1px solid #4b6f88;border-radius:8px;background:#17344e;color:#fff;font-size:11px;font-weight:800}
+.dialogBtns .ok{background:#168a51;border-color:#31b879}.dialogBtns .danger{background:#762733;border-color:#bd5b68}
+.sheet{width:min(500px,100%);max-height:80dvh;overflow:auto;background:#0c2138;border:1px solid #3c5b73;border-radius:16px;padding:10px}
+.sheet .mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}.sheet .mhead b{font-size:14px}
+.x{width:31px;height:29px;border:1px solid #55758f;border-radius:6px;background:#162f48;color:#fff;font-size:19px}
 .row{padding:6px 2px;border-bottom:1px solid #29455d;font-size:10px;line-height:1.35}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:7px}.mgrid button{height:34px;border:1px solid #476780;border-radius:7px;background:#142e47;color:#fff;font-size:10px;font-weight:800}.danger{background:#5a202a!important;border-color:#aa4a55!important}
 @media(max-height:680px){header{height:46px;flex-basis:46px}.top{height:32px;width:35px}.head b{font-size:16px}#home{gap:3px;padding:4px 8px}.balance{min-height:62px;padding:5px 12px}.amount{font-size:23px}.set{padding:4px 5px}.set select{height:25px}.info div{height:27px}.stats div{height:33px}.cycles button{height:30px}.results button{height:25px}.betline{padding:3px 7px}.tools button{height:29px}}
@@ -57,7 +70,6 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 <div class="cycle">Cycle <b id="cycle">1</b> · <b id="status">Stopped</b></div>
 </section>
 
-<!-- ALL IMPORTANT SETTINGS ARE ON HOME -->
 <section class="settingsGrid">
 <div class="set"><label>🎯 PROFIT TARGET</label>
 <select id="targetPct"><option>1</option><option>2</option><option>3</option><option selected>5</option><option>10</option><option>15</option><option>20</option></select>
@@ -73,7 +85,7 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 <section class="info">
 <div><span>🎯 Target Left</span><b id="targetLeft">₹250</b></div>
 <div><span>🛑 Loss Left</span><b id="lossLeft">₹250</b></div>
-<div><span>⚡ Bet Amount</span><b id="betNow">₹100</b></div>
+<div><span>⚡ Calculated Bet</span><b id="betNow">₹100</b></div>
 <div><span>📈 Progress</span><b id="pct">0%</b></div>
 </section>
 
@@ -91,14 +103,18 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 </section>
 
 <section class="quick">
-<div class="qt">QUICK RESULT — नीचे के buttons fixed amounts हैं; BET बटन calculated amount से चलता है</div>
+<div class="qt">MANUAL RESULT — इन 3 amounts को जरूरत के अनुसार unlimited बार दबाएँ</div>
 <div class="results">
-<button id="betWin">BET WIN</button><button id="betLoss">BET LOSS</button>
-<button data-a="100">+100</button><button data-a="200">+200</button><button data-a="-100">−100</button><button data-a="-200">−200</button>
+<button class="win" data-a="100">+₹100</button>
+<button class="win" data-a="200">+₹200</button>
+<button class="win" data-a="500">+₹500</button>
+<button class="loss" data-a="-100">−₹100</button>
+<button class="loss" data-a="-200">−₹200</button>
+<button class="loss" data-a="-500">−₹500</button>
 </div>
 </section>
 
-<section class="betline"><span>Current calculated bet</span><b id="betDisplay">₹100</b></section>
+<section class="betline"><span>Current calculated bet (सूचना)</span><b id="betDisplay">₹100</b></section>
 
 <section class="tools">
 <button id="history">📜 History</button><button id="report">📊 Report</button><button id="more">☷ More</button>
@@ -106,13 +122,24 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 </main>
 </div>
 
-<div class="modal hide" id="modal"><div class="sheet">
-<div class="mhead"><b id="mtitle">Details</b><button class="x" id="close">×</button></div>
+<div class="modal hide" id="dialogModal">
+<div class="dialog">
+<div class="dialogIcon" id="dicon">ℹ️</div>
+<div class="dialogTitle" id="dtitle">Message</div>
+<div class="dialogText" id="dtext"></div>
+<div class="dialogBtns" id="dbtns"></div>
+</div>
+</div>
+
+<div class="modal hide" id="sheetModal">
+<div class="sheet">
+<div class="mhead"><b id="mtitle">Details</b><button class="x" id="closeSheet">×</button></div>
 <div id="mbody"></div>
-</div></div>
+</div>
+</div>
 
 <script>
-const KEY='cycle_tracker_home_settings_v3';
+const KEY='cycle_tracker_final_v4';
 const DEF={balance:5000,peak:5000,cycle:1,running:false,startBalance:5000,targetPct:5,lossPct:5,betPct:1,profit:0,loss:0,history:[]};
 let s=JSON.parse(localStorage.getItem(KEY)||'null')||JSON.parse(JSON.stringify(DEF));
 const $=id=>document.getElementById(id);
@@ -120,74 +147,131 @@ const money=n=>'₹'+Math.round(n).toLocaleString('en-IN');
 const roundBet=()=>Math.max(100,Math.ceil((s.balance*s.betPct/100)/100)*100);
 const targetAmount=()=>s.startBalance*s.targetPct/100;
 const lossAmount=()=>s.startBalance*s.lossPct/100;
+
 function save(){localStorage.setItem(KEY,JSON.stringify(s));draw()}
 function draw(){
- $('balance').textContent=money(s.balance);$('cycle').textContent=s.cycle;$('status').textContent=s.running?'Running':'Stopped';
+ $('balance').textContent=money(s.balance);
+ $('cycle').textContent=s.cycle;
+ $('status').textContent=s.running?'Running':'Stopped';
  $('targetPct').value=s.targetPct;$('lossPct').value=s.lossPct;$('betPct').value=s.betPct;
- $('targetAmt').textContent=money(targetAmount());$('lossAmt').textContent=money(lossAmount());$('betAmt').textContent=money(roundBet());
- let tl=Math.max(0,targetAmount()-s.profit),ll=Math.max(0,lossAmount()-s.loss);
- $('targetLeft').textContent=money(tl);$('lossLeft').textContent=money(ll);$('betNow').textContent=money(roundBet());$('betDisplay').textContent=money(roundBet());
+ $('targetAmt').textContent=money(targetAmount());$('lossAmt').textContent=money(lossAmount());
+ $('betAmt').textContent=money(roundBet());
+ $('targetLeft').textContent=money(Math.max(0,targetAmount()-s.profit));
+ $('lossLeft').textContent=money(Math.max(0,lossAmount()-s.loss));
+ $('betNow').textContent=money(roundBet());$('betDisplay').textContent=money(roundBet());
  $('highest').textContent=money(s.peak);$('profit').textContent=money(s.profit);$('loss').textContent=money(s.loss);
- let p=targetAmount()?Math.min(100,s.profit/targetAmount()*100):0;$('pct').textContent=Math.round(p)+'%';$('bar').style.width=p+'%';
+ const p=targetAmount()?Math.min(100,s.profit/targetAmount()*100):0;
+ $('pct').textContent=Math.round(p)+'%';$('bar').style.width=p+'%';
 }
-function show(t,h){$('mtitle').textContent=t;$('mbody').innerHTML=h;$('modal').classList.remove('hide')}
-function hide(){$('modal').classList.add('hide')}
+
+/* Beautiful custom popup: no browser alert/confirm */
+let dialogResolve=null;
+function popup(icon,title,text,buttons=[{label:'ठीक है',cls:'ok',value:true}]){
+ $('dicon').textContent=icon;$('dtitle').textContent=title;$('dtext').textContent=text;
+ const box=$('dbtns');box.innerHTML='';
+ return new Promise(resolve=>{
+   dialogResolve=resolve;
+   buttons.forEach(b=>{
+     const el=document.createElement('button');el.textContent=b.label;el.className=b.cls||'';
+     el.onclick=()=>{ $('dialogModal').classList.add('hide'); const r=dialogResolve;dialogResolve=null;if(r)r(b.value) };
+     box.appendChild(el);
+   });
+   $('dialogModal').classList.remove('hide');
+ });
+}
+function sheet(t,h){$('mtitle').textContent=t;$('mbody').innerHTML=h;$('sheetModal').classList.remove('hide')}
+function closeSheet(){$('sheetModal').classList.add('hide')}
+
 function settingsChanged(){
- s.targetPct=+$('targetPct').value;s.lossPct=+$('lossPct').value;s.betPct=+$('betPct').value;
- if(s.running){/* settings are allowed to change during a cycle; limits recalculate from original start amount */}
- save();
+ s.targetPct=+$('targetPct').value;s.lossPct=+$('lossPct').value;s.betPct=+$('betPct').value;save();
 }
+
 $('targetPct').onchange=settingsChanged;$('lossPct').onchange=settingsChanged;$('betPct').onchange=settingsChanged;
 
 function startCycle(){
- if(s.running)return alert('Cycle पहले से चालू है।');
+ if(s.running){popup('ℹ️','Cycle पहले से चालू है','यह cycle अभी चल रहा है।');return}
  s.running=true;s.startBalance=s.balance;s.profit=0;s.loss=0;save();
 }
-function finish(reason,type){
+async function stopCycle(){
+ if(!s.running){popup('ℹ️','Cycle चालू नहीं है','अभी कोई running cycle नहीं है।');return}
+ const ok=await popup('⏹️','Cycle रोकें?','क्या आप इस cycle को अभी manually stop करना चाहते हैं?',[{label:'रद्द करें',value:false},{label:'हाँ, रोकें',cls:'ok',value:true}]);
+ if(ok){s.running=false;save()}
+}
+
+/* Web Audio sounds are created after a user gesture, so Android can play them reliably. */
+function audioContext(){
+ const C=window.AudioContext||window.webkitAudioContext;
+ if(!C)return null;
+ const c=new C(); if(c.state==='suspended')c.resume(); return c;
+}
+function tone(ctx,f,start,dur,type='sine',gain=.08){
+ const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.value=f;
+ g.gain.setValueAtTime(0,start);g.gain.linearRampToValueAtTime(gain,start+.015);g.gain.exponentialRampToValueAtTime(.001,start+dur);
+ o.connect(g).connect(ctx.destination);o.start(start);o.stop(start+dur+.03);
+}
+function targetSound(){
+ try{
+   const c=audioContext();if(!c)return;
+   const t=c.currentTime;
+   tone(c,523,t,.16,'sine',.13);tone(c,659,t+.13,.16,'sine',.13);tone(c,784,t+.26,.22,'sine',.15);tone(c,1047,t+.43,.35,'sine',.16);
+   if(navigator.vibrate)navigator.vibrate([80,50,80]);
+ }catch(e){}
+ try{const u=new SpeechSynthesisUtterance('वाह! टारगेट पूरा हो गया।');u.lang='hi-IN';u.rate=.9;u.pitch=1.2;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}
+}
+function lossSound(){
+ try{
+   const c=audioContext();if(!c)return;
+   const t=c.currentTime;
+   tone(c,220,t,.22,'sawtooth',.13);tone(c,165,t+.22,.3,'sawtooth',.14);tone(c,110,t+.52,.45,'sawtooth',.15);
+   if(navigator.vibrate)navigator.vibrate([180,80,220,80,300]);
+ }catch(e){}
+ try{const u=new SpeechSynthesisUtterance('रुकिए! स्टॉप लॉस पूरा हो गया है। अब रुकना है।');u.lang='hi-IN';u.rate=.72;u.pitch=.55;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}
+}
+
+async function finish(reason,type){
  s.running=false;
  s.history.unshift({cycle:s.cycle,date:new Date().toLocaleString('hi-IN'),start:s.startBalance,end:s.balance,profit:s.profit,loss:s.loss,targetPct:s.targetPct,lossPct:s.lossPct,betPct:s.betPct,reason});
  s.cycle++;save();
- if(type==='win')speakWin();else if(type==='loss')speakLoss();
- show(type==='win'?'🎯 TARGET HIT':'🛑 STOP LOSS',`<div class="row">${reason}</div><div class="row">Balance: <b>${money(s.balance)}</b></div><div class="row">Profit: <b>${money(s.profit)}</b> · Loss: <b>${money(s.loss)}</b></div>`);
+ if(type==='win')targetSound();else lossSound();
+ await popup(type==='win'?'🎉':'🛑',type==='win'?'TARGET HIT':'STOP LOSS',reason+`\n\nBalance: ${money(s.balance)}\nProfit: ${money(s.profit)}\nLoss: ${money(s.loss)}`);
 }
+
 function addResult(a){
- if(!s.running)return alert('पहले Start Cycle दबाइए।');
- s.balance=Math.max(0,s.balance+a);if(a>0)s.profit+=a;else s.loss+=Math.abs(a);
- if(s.profit>=targetAmount()){finish('🎉 आपका निर्धारित Profit Target पूरा हो गया। Cycle समाप्त।','win');return}
- if(s.loss>=lossAmount()){finish('🛑 निर्धारित Stop Loss पूरा हो गया। अब रुकना है।','loss');return}
- if(s.balance>s.peak)s.peak=s.balance;save();
+ if(!s.running){popup('▶️','Cycle शुरू करें','Manual result दर्ज करने से पहले Start Cycle दबाएँ।');return}
+ s.balance=Math.max(0,s.balance+a);
+ if(a>0)s.profit+=a;else s.loss+=Math.abs(a);
+ if(s.balance>s.peak)s.peak=s.balance;
+ if(s.profit>=targetAmount()){finish('आपका निर्धारित Profit Target पूरा हो गया। Cycle समाप्त।','win');return}
+ if(s.loss>=lossAmount()){finish('आपका निर्धारित Stop Loss पूरा हो गया। अब रुकना है।','loss');return}
+ save();
 }
-function betResult(win){
- const a=roundBet();addResult(win?a:-a)
-}
-function speakWin(){
- try{let u=new SpeechSynthesisUtterance('वाह! Target hit हो गया! बहुत बढ़िया। Cycle पूरा हुआ।');u.lang='hi-IN';u.rate=.92;u.pitch=1.25;u.volume=1;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}
-}
-function speakLoss(){
- try{let u=new SpeechSynthesisUtterance('रुकिए! Stop Loss hit हो गया है। अब रुकना है। आगे bet मत लगाइए।');u.lang='hi-IN';u.rate=.72;u.pitch=.45;u.volume=1;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}
-}
-$('start').onclick=startCycle;$('stopBtn').onclick=()=>{if(s.running){s.running=false;save()}else alert('Cycle चल नहीं रहा है।')};
-$('betWin').onclick=()=>betResult(true);$('betLoss').onclick=()=>betResult(false);
+
+$('start').onclick=startCycle;
+$('stopBtn').onclick=stopCycle;
 document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>addResult(+b.dataset.a));
 
 function history(){
- if(!s.history.length)return show('History','<div class="row">अभी कोई completed cycle नहीं है।</div>');
- show('History',s.history.map(h=>`<div class="row"><b>Cycle ${h.cycle}</b> · ${h.date}<br>Start ${money(h.start)} → End ${money(h.end)}<br>Target ${h.targetPct}% · Stop ${h.lossPct}% · Bet ${h.betPct}%<br>Profit ${money(h.profit)} · Loss ${money(h.loss)}<br>${h.reason}</div>`).join(''))
+ if(!s.history.length){sheet('History','<div class="row">अभी कोई completed cycle नहीं है।</div>');return}
+ sheet('History',s.history.map(h=>`<div class="row"><b>Cycle ${h.cycle}</b> · ${h.date}<br>Start ${money(h.start)} → End ${money(h.end)}<br>Target ${h.targetPct}% · Stop ${h.lossPct}% · Bet ${h.betPct}%<br>Profit ${money(h.profit)} · Loss ${money(h.loss)}<br>${h.reason}</div>`).join(''));
 }
-function report(){show('Report',`<div class="row">Completed Cycles: <b>${s.history.length}</b></div><div class="row">Current Balance: <b>${money(s.balance)}</b></div><div class="row">Highest Peak: <b>${money(s.peak)}</b></div><div class="row">Current Target: <b>${s.targetPct}% = ${money(targetAmount())}</b></div><div class="row">Current Stop Loss: <b>${s.lossPct}% = ${money(lossAmount())}</b></div><div class="row">Current Bet: <b>${s.betPct}% → ${money(roundBet())}</b></div>`)}
+function report(){
+ sheet('Report',`<div class="row">Completed Cycles: <b>${s.history.length}</b></div><div class="row">Current Balance: <b>${money(s.balance)}</b></div><div class="row">Highest Peak: <b>${money(s.peak)}</b></div><div class="row">Profit Target: <b>${s.targetPct}% = ${money(targetAmount())}</b></div><div class="row">Stop Loss: <b>${s.lossPct}% = ${money(lossAmount())}</b></div><div class="row">Calculated Bet: <b>${s.betPct}% → ${money(roundBet())}</b></div>`);
+}
 function more(){
- show('More',`<div class="mgrid">
-<button id="clear" class="danger">🗑️ Clear History</button><button id="reset" class="danger">♻️ Reset App</button>
+ sheet('More',`<div class="mgrid">
 <button id="testWin">🔊 Test Target Sound</button><button id="testLoss">🔊 Test Stop Sound</button>
+<button id="clear" class="danger">🗑️ Clear History</button><button id="reset" class="danger">♻️ Reset App</button>
 </div>`);
-$('testWin').onclick=speakWin;$('testLoss').onclick=speakLoss;
-$('clear').onclick=()=>{if(confirm('सिर्फ History clear करें?')){s.history=[];save();hide()}};
-$('reset').onclick=()=>{if(confirm('पूरा App Reset करें?')){localStorage.removeItem(KEY);location.reload()}};
+ $('testWin').onclick=targetSound;$('testLoss').onclick=lossSound;
+ $('clear').onclick=async()=>{const ok=await popup('🗑️','Clear History?','सिर्फ History हटेगी। Balance, Peak और वर्तमान settings सुरक्षित रहेंगी।',[{label:'रद्द करें',value:false},{label:'हाँ, Clear करें',cls:'danger',value:true}]);if(ok){s.history=[];save();closeSheet()}};
+ $('reset').onclick=async()=>{const ok=await popup('♻️','पूरा App Reset करें?','Balance, Peak, History और सभी saved settings हट जाएँगी।',[{label:'रद्द करें',value:false},{label:'हाँ, Reset करें',cls:'danger',value:true}]);if(ok){localStorage.removeItem(KEY);location.reload()}};
 }
 $('history').onclick=history;$('report').onclick=report;$('more').onclick=more;
-$('about').onclick=()=>show('Home Settings','<div class="row">Profit Target, Stop Loss और Bet % अब इसी Home screen पर हैं। इन्हें cycle शुरू करने से पहले या चलती cycle में भी बदला जा सकता है।</div>');
-$('menu').onclick=()=>show('How it works','<div class="row"><b>Profit Target:</b> Cycle तब तक चलता है जब तक कुल profit आपके चुने प्रतिशत तक न पहुँच जाए।</div><div class="row"><b>Stop Loss:</b> Cycle तब तक चलता है जब तक कुल loss चुनी सीमा तक न पहुँच जाए।</div><div class="row"><b>Bet %:</b> Current balance के प्रतिशत से amount निकलता है और अगले ₹100 multiple तक round-up होता है।</div><div class="row"><b>BET WIN / BET LOSS:</b> calculated bet amount को एक click में record करता है।</div>');
-$('close').onclick=hide;$('modal').onclick=e=>{if(e.target.id==='modal')hide()};
+$('about').onclick=()=>sheet('Home Settings','<div class="row">Profit Target, Stop Loss और Bet % इसी Home screen पर सेट किए जाते हैं। Manual Result के +₹100, +₹200 और +₹500 buttons fixed हैं और unlimited बार दबाए जा सकते हैं।</div>');
+$('menu').onclick=()=>sheet('How it works','<div class="row"><b>Profit Target:</b> Cycle तब तक चलता है जब तक कुल profit चुने हुए प्रतिशत तक नहीं पहुँचता।</div><div class="row"><b>Stop Loss:</b> Cycle तब तक चलता है जब तक कुल loss चुनी सीमा तक नहीं पहुँचता।</div><div class="row"><b>Bet %:</b> यह केवल calculated bet दिखाता है। Manual result buttons इससे अलग हैं।</div>');
+$('closeSheet').onclick=closeSheet;
+$('sheetModal').onclick=e=>{if(e.target.id==='sheetModal')closeSheet()};
+
 draw();
 </script>
 </body>
