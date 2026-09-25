@@ -274,10 +274,37 @@ function sheet(t,h){$('mtitle').textContent=t;$('mbody').innerHTML=h;$('sheetMod
 function closeSheet(){$('sheetModal').classList.add('hide')}
 
 function settingsChanged(){
- s.targetPct=+$('targetPct').value;s.lossPct=+$('lossPct').value;s.betPct=+$('betPct').value;save();
+  // Read the currently selected values immediately. Do not wait for a later draw.
+  s.targetPct=Number($('targetPct').value);
+  s.lossPct=Number($('lossPct').value);
+  s.betPct=Number($('betPct').value);
+
+  // Target/Stop amount is based on the cycle-start balance while a cycle is running;
+  // before a cycle starts it is based on the current balance. Bet % always uses current balance.
+  const base=s.running?s.startBalance:s.balance;
+  const target=base*s.targetPct/100;
+  const loss=base*s.lossPct/100;
+  const bet=Math.max(100,Math.ceil((s.balance*s.betPct/100)/100)*100);
+
+  // Update the visible amounts immediately.
+  $('targetAmt').textContent=money(target);
+  $('lossAmt').textContent=money(loss);
+  $('targetInfo').textContent=money(target);
+  $('remainingInfo').textContent=money(Math.max(0,target-s.profit));
+  $('lossLeft').textContent=money(Math.max(0,loss-s.loss));
+  $('betAmt').textContent=money(bet);
+  $('betNow').textContent=money(bet);
+  $('betDisplay').textContent=money(bet);
+
+  localStorage.setItem(KEY,JSON.stringify(s));
+  draw();
 }
 
-$('targetPct').onchange=settingsChanged;$('lossPct').onchange=settingsChanged;$('betPct').onchange=settingsChanged;
+// Use both change and input so the values update reliably on Android/WebView too.
+['targetPct','lossPct','betPct'].forEach(id=>{
+  $(id).addEventListener('change',settingsChanged);
+  $(id).addEventListener('input',settingsChanged);
+});
 
 function startCycle(){
  if(s.running){popup('ℹ️','Cycle पहले से चालू है','यह cycle अभी चल रहा है।');return}
