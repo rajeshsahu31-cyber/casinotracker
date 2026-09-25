@@ -66,7 +66,19 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 .calcGrid{display:grid;grid-template-columns:1fr 1fr;gap:4px}.calcGrid label{font-size:7px;color:#94adc0;font-weight:800}.calcGrid label:nth-child(3){grid-column:1/2}.calcGrid input{display:block;width:100%;height:28px;margin-top:2px;border:1px solid #3d617a;border-radius:6px;background:#071b2e;color:#fff;padding:3px 6px;font-size:10px}.calcGrid button{height:28px;border:0;border-radius:6px;background:#15955a;color:#fff;font-size:9px;font-weight:900;align-self:end}
 .compoundResult{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:4px;margin:6px 0}.compoundResult div{background:#102f48;border-radius:7px;padding:5px;text-align:center}.compoundResult small{display:block;color:#8faabd;font-size:7px}.compoundResult b{font-size:10px}.compoundResult .final{background:#124b39}.compoundResult .final b{font-size:12px}
 .compoundTable{min-height:0;overflow:auto;border-top:1px solid #29475f}.compoundTable .ctrow{display:grid;grid-template-columns:42px 1fr 1fr;gap:3px;border-bottom:1px solid #203e55;padding:4px 2px;font-size:8px}.compoundTable .ctrow b:last-child{text-align:right}.compoundTable .cthead{color:#8faabd;font-weight:800}
-.bottomNav{height:50px;flex:0 0 50px;z-index:20;background:#071a2d;border-top:1px solid #2b4a62;display:grid;grid-template-columns:1fr 1fr;padding:5px 10px}.bottomNav button{border:1px solid transparent;border-radius:8px;background:transparent;color:#91a9bc;font-size:10px;font-weight:800}.bottomNav button span{display:block;font-size:8px;margin-top:1px}.bottomNav button.active{background:#123b59;color:#fff;border-color:#2d6b92}
+
+/* Rules page */
+.rulesPage{flex:1;min-height:0;padding:8px 10px 7px;overflow:hidden;display:flex;flex-direction:column;gap:7px}
+.rulesHero{border:1px solid #2d83b5;border-radius:15px;background:linear-gradient(135deg,#12395a,#0a2239);padding:10px 12px;flex:0 0 auto}
+.rulesHero b{display:block;font-size:18px}.rulesHero small{display:block;color:#a5bfd1;font-size:9px;margin-top:3px}
+.rulesList{min-height:0;flex:1;overflow:auto;display:grid;gap:6px;padding-right:1px}
+.ruleCard{border:1px solid #315a75;border-radius:12px;background:#09233b;padding:8px 10px}
+.ruleCard h3{margin:0 0 4px;font-size:12px}.ruleCard p{margin:0;color:#c8d8e5;font-size:10px;line-height:1.45}.ruleCard strong{color:#fff}
+.ruleCard.golden{border-color:#9b7930;background:linear-gradient(135deg,#2b2411,#10263b)}
+.golden p{font-size:11px;font-weight:800}
+@media(max-height:680px){.rulesPage{padding:5px 8px 6px;gap:4px}.rulesHero{padding:7px 10px}.rulesHero b{font-size:15px}.ruleCard{padding:6px 8px}.ruleCard h3{font-size:10px;margin-bottom:2px}.ruleCard p{font-size:8px;line-height:1.35}.golden p{font-size:9px}}
+
+.bottomNav{height:50px;flex:0 0 50px;z-index:20;background:#071a2d;border-top:1px solid #2b4a62;display:grid;grid-template-columns:1fr 1fr 1fr;padding:5px 10px}.bottomNav button{border:1px solid transparent;border-radius:8px;background:transparent;color:#91a9bc;font-size:10px;font-weight:800}.bottomNav button span{display:block;font-size:8px;margin-top:1px}.bottomNav button.active{background:#123b59;color:#fff;border-color:#2d6b92}
 @media(max-width:700px){.reportSplit{grid-template-columns:1fr 1fr}.reportHero{height:56px;flex-basis:56px}.reportHero b{font-size:16px}.reportCard{padding:6px}.cardHead b{font-size:10px}.calcGrid input{height:27px}.compoundResult b{font-size:9px}.compoundResult .final b{font-size:11px}}
 @media(max-width:430px){.page{padding-left:7px;padding-right:7px}.reportSplit{gap:4px}.reportCard{padding:5px}.reportHero{padding:7px 9px}.dayRow{font-size:8px}.dayRow b{font-size:10px}.compoundTable .ctrow{font-size:7px}.calcGrid input{font-size:9px}.heroTotal strong{font-size:18px}}
 </style>
@@ -174,9 +186,27 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 </section>
 </main>
 
+
+<main id="rulesPage" class="rulesPage hide">
+  <section class="rulesHero">
+    <b>📜 Rules / Daily Discipline</b>
+    <small>हर दिन काम शुरू करने से पहले इन नियमों को एक बार पढ़ें।</small>
+  </section>
+  <section class="rulesList">
+    <div class="ruleCard"><h3>🎯 1. Profit Target</h3><p>सामान्य Target <strong>5% प्रति Cycle</strong> है। Target पूरा होने पर Cycle अपने-आप Complete होगा। एक दिन में कितने Cycle करने हैं, इसकी कोई मजबूरी नहीं है।</p></div>
+    <div class="ruleCard"><h3>🎲 2. Bet Rule</h3><p>सामान्य Bet <strong>1%</strong> है। Loss होने पर Bet बढ़ाकर recovery नहीं करनी है।</p></div>
+    <div class="ruleCard"><h3>🛑 3. Daily Stop-Loss</h3><p>Daily Stop-Loss <strong>5%</strong> है। Stop-Loss hit होते ही <strong>उस दिन रुकना है</strong>। उसी दिन loss recover करने के लिए नया Cycle नहीं करना है।</p></div>
+    <div class="ruleCard"><h3>🔄 4. Recovery Rule</h3><p>पिछले दिन का loss देखकर अगले दिन Target या Bet नहीं बढ़ाना है। अगले दिन फिर सामान्य <strong>5% Target + 1% Bet</strong> से शुरू करना है। Loss को chase नहीं करना है।</p></div>
+    <div class="ruleCard"><h3>💰 5. Profit Discipline</h3><p>Target पूरा होने के बाद लालच में नियम बदलकर लगातार आगे नहीं बढ़ना है। Target कोई guaranteed daily income नहीं है।</p></div>
+    <div class="ruleCard"><h3>📈 6. Capital बढ़ने पर</h3><p>Balance बढ़ने पर 5% की रकम भी बड़ी होगी। जरूरत होने पर Target % को पहले से तय नियम के अनुसार कम किया जा सकता है; अचानक profit या loss देखकर percentage नहीं बदलना है।</p></div>
+    <div class="ruleCard golden"><h3>⭐ सबसे जरूरी Golden Rule</h3><p>Loss को <strong>CHASE नहीं करना है</strong>। Bet नहीं बढ़ाना है। Stop-Loss के बाद रुकना है। पुराने loss को अगले दिन जबरदस्ती recover करने की कोशिश नहीं करनी है।</p></div>
+  </section>
+</main>
+
 <nav class="bottomNav">
  <button id="navHome" class="active">🏠<span>Home</span></button>
  <button id="navReport">📊<span>Report</span></button>
+ <button id="navRules">📜<span>Rules</span></button>
 </nav>
 </div>
 
@@ -446,13 +476,21 @@ function calculateCompound(){
   $('compoundStartOut').textContent=money2(start);$('compoundCyclesOut').textContent=cycles;$('compoundFinal').textContent=money2(amount);$('compoundTable').innerHTML=rows.join('');
 }
 function money2(n){return '₹'+Number(n).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2})}
-function showHome(){
- $('home').classList.remove('hide');$('reportPage').classList.add('hide');$('navHome').classList.add('active');$('navReport').classList.remove('active');$('pageTitle').textContent='Cycle Tracker';$('pageSub').textContent='Quick Dashboard';
+function setPage(page){
+ $('home').classList.toggle('hide',page!=='home');
+ $('reportPage').classList.toggle('hide',page!=='report');
+ $('rulesPage').classList.toggle('hide',page!=='rules');
+ $('navHome').classList.toggle('active',page==='home');
+ $('navReport').classList.toggle('active',page==='report');
+ $('navRules').classList.toggle('active',page==='rules');
+ if(page==='home'){ $('pageTitle').textContent='Cycle Tracker';$('pageSub').textContent='Quick Dashboard';draw(); }
+ if(page==='report'){ $('pageTitle').textContent='Cycle Report';$('pageSub').textContent='History + Compounding';renderReport(); }
+ if(page==='rules'){ $('pageTitle').textContent='Rules / Discipline';$('pageSub').textContent='Daily Rules'; }
 }
-function showReport(){
- $('home').classList.add('hide');$('reportPage').classList.remove('hide');$('navHome').classList.remove('active');$('navReport').classList.add('active');$('pageTitle').textContent='Cycle Report';$('pageSub').textContent='History + Compounding';renderReport();
-}
-$('navHome').onclick=showHome;$('navReport').onclick=showReport;$('compoundCalc').onclick=calculateCompound;
+function showHome(){setPage('home')}
+function showReport(){setPage('report')}
+function showRules(){setPage('rules')}
+$('navHome').onclick=showHome;$('navReport').onclick=showReport;$('navRules').onclick=showRules;$('compoundCalc').onclick=calculateCompound;
 ['compoundStart','compoundPct','compoundCycles'].forEach(id=>$(id).addEventListener('input',calculateCompound));
 
 draw();
