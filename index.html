@@ -30,7 +30,9 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 .stats span{display:block;color:#9eb4c8;font-size:8px}.stats b{font-size:12px}
 .progress{height:5px;background:#18344d;border-radius:7px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:#21d16b}
 .cycles{display:grid;grid-template-columns:1fr 1fr;gap:5px}.cycles button{height:34px;border:0;border-radius:8px;color:#fff;font-size:11px;font-weight:800;position:relative;overflow:hidden;transition:transform .15s,box-shadow .2s}.cycles button:disabled{opacity:.82;cursor:default}.cycles .start:not(:disabled){animation:startPulse 1.05s ease-in-out infinite;box-shadow:0 0 0 0 rgba(16,185,87,.55)}.cycles .stop:not(:disabled){animation:stopPulse 1.05s ease-in-out infinite;box-shadow:0 0 0 0 rgba(239,48,71,.5)}.cycles .start.running{animation:none;box-shadow:none}.cycles button:active{transform:scale(.98)}@keyframes startPulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,87,.45)}50%{box-shadow:0 0 0 6px rgba(16,185,87,0)}}@keyframes stopPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,48,71,.4)}50%{box-shadow:0 0 0 6px rgba(239,48,71,0)}}
-.start{background:#10b957}.start.running{background:#087d3b}.stop{background:#ef3047}.stop:disabled{background:#6d2731;opacity:.55}
+.start{background:#10b957}.start.running{background:#087d3b}.stop{background:#ef3047}.stop:disabled{background:#6d2731;opacity:.55}.cycles .start:not(:disabled)::after{content:'👇 Cycle शुरू करें';position:absolute;right:6px;bottom:3px;font-size:7px;font-weight:900;opacity:.9}.cycles .stop:not(:disabled)::after{content:'👇 Cycle बंद करें';position:absolute;right:6px;bottom:3px;font-size:7px;font-weight:900;opacity:.9}
+.cycles .start:not(:disabled),.cycles .stop:not(:disabled){box-shadow:0 0 0 2px rgba(255,255,255,.35),0 0 16px rgba(255,255,255,.45);animation:cycleHighlight 1.2s ease-in-out infinite}
+@keyframes cycleHighlight{50%{transform:scale(1.025);filter:brightness(1.12)}}
 .quick .qt{font-size:8px;color:#9eb5c9;font-weight:800;margin:0 0 3px 2px}
 .results{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
 .results button{height:29px;border:1px solid #476780;border-radius:6px;background:#112a42;color:#fff;font-size:9px;font-weight:800}
@@ -109,7 +111,7 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 <b id="lossAmt">₹250</b></div>
 <div class="set"><label>🎲 BET %</label>
 <select id="betPct"><option>0.5</option><option selected>1</option><option>2</option><option>3</option><option>5</option><option>10</option></select>
-<b id="betAmt">₹100</b></div>
+<b id="betAmt">₹50</b></div>
 </section>
 
 <section class="info">
@@ -120,7 +122,7 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 </section>
 <section class="info subInfo">
 <div><span>🛑 Loss Left</span><b id="lossLeft">₹250</b></div>
-<div><span>⚡ Calculated Bet</span><b id="betNow">₹100</b></div>
+<div><span>⚡ Calculated Bet</span><b id="betNow">₹50</b></div>
 </section>
 
 <section class="stats">
@@ -148,7 +150,7 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 </div>
 </section>
 
-<section class="betline"><span>Current calculated bet (सूचना)</span><b id="betDisplay">₹100</b></section>
+<section class="betline"><span>Current calculated bet (सूचना)</span><b id="betDisplay">₹50</b></section>
 
 <section class="tools">
 <button id="history">📜 History</button><button id="report">📊 Report</button><button id="more">☷ More</button>
@@ -242,7 +244,9 @@ let s=JSON.parse(localStorage.getItem(KEY)||'null')||JSON.parse(JSON.stringify(D
 })();
 const $=id=>document.getElementById(id);
 const money=n=>'₹'+Math.round(n).toLocaleString('en-IN');
-const roundBet=()=>s.balance*s.betPct/100;
+const roundBet=()=>{ const balance=Number(s.balance)||0; const pct=Number(s.betPct)||0; return balance*pct/100; };
+// Bet % display: exact percentage of current balance (no minimum/rounding).
+const exactBetAmount=()=>Math.max(0,(Number(s.balance)||0)*(Number(s.betPct)||0)/100);
 const cycleBaseBalance=()=>s.running?s.startBalance:s.balance;
 const targetAmount=()=>cycleBaseBalance()*s.targetPct/100;
 const lossAmount=()=>cycleBaseBalance()*s.lossPct/100;
@@ -258,12 +262,12 @@ function draw(){
  $('cycle').textContent=s.cycle;
  $('targetPct').value=s.targetPct;$('lossPct').value=s.lossPct;$('betPct').value=s.betPct;
  $('targetAmt').textContent=money(targetAmount());$('lossAmt').textContent=money(lossAmount());
- $('betAmt').textContent=money(roundBet());
+ $('betAmt').textContent=money(exactBetAmount());
  $('targetInfo').textContent=money(targetAmount());
  $('achievedInfo').textContent=money(Math.min(s.profit,targetAmount()));
  $('remainingInfo').textContent=money(Math.max(0,targetAmount()-s.profit));
  $('lossLeft').textContent=money(Math.max(0,lossAmount()-s.loss));
- $('betNow').textContent=money(roundBet());$('betDisplay').textContent=money(roundBet());
+ $('betNow').textContent=money(exactBetAmount());$('betDisplay').textContent=money(exactBetAmount());
  $('highest').textContent=money(s.peak);$('profit').textContent=money(s.profit);$('loss').textContent=money(s.loss);
  const target=targetAmount();
  const achievedPct=target?Math.min(s.targetPct,s.profit/s.startBalance*100):0;
@@ -425,7 +429,7 @@ function history(){
  sheet('History',s.history.map(h=>`<div class="row"><b>Cycle ${h.cycle}</b> · ${h.date}<br>Start ${money(h.start)} → End ${money(h.end)}<br>Target ${h.targetPct}% · Stop ${h.lossPct}% · Bet ${h.betPct}%<br>Profit ${money(h.profit)} · Loss ${money(h.loss)}<br>${h.reason}</div>`).join(''));
 }
 function report(){
- sheet('Report',`<div class="row">Completed Cycles: <b>${s.history.length}</b></div><div class="row">Current Balance: <b>${money(s.balance)}</b></div><div class="row">Highest Peak: <b>${money(s.peak)}</b></div><div class="row">Profit Target: <b>${s.targetPct}% = ${money(targetAmount())}</b></div><div class="row">Stop Loss: <b>${s.lossPct}% = ${money(lossAmount())}</b></div><div class="row">Calculated Bet: <b>${s.betPct}% → ${money(roundBet())}</b></div>`);
+ sheet('Report',`<div class="row">Completed Cycles: <b>${s.history.length}</b></div><div class="row">Current Balance: <b>${money(s.balance)}</b></div><div class="row">Highest Peak: <b>${money(s.peak)}</b></div><div class="row">Profit Target: <b>${s.targetPct}% = ${money(targetAmount())}</b></div><div class="row">Stop Loss: <b>${s.lossPct}% = ${money(lossAmount())}</b></div><div class="row">Calculated Bet: <b>${s.betPct}% → ${money(exactBetAmount())}</b></div>`);
 }
 function more(){
  sheet('More',`<div class="mgrid">
