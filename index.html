@@ -53,13 +53,29 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 .row{padding:6px 2px;border-bottom:1px solid #29455d;font-size:10px;line-height:1.35}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:7px}.mgrid button{height:34px;border:1px solid #476780;border-radius:7px;background:#142e47;color:#fff;font-size:10px;font-weight:800}.danger{background:#5a202a!important;border-color:#aa4a55!important}
 @media(max-height:680px){header{height:46px;flex-basis:46px}.top{height:32px;width:35px}.head b{font-size:16px}#home{gap:3px;padding:4px 8px}.balance{min-height:62px;padding:5px 12px}.amount{font-size:23px}.set{padding:4px 5px}.set select{height:25px}.info div{height:27px}.stats div{height:33px}.cycles button{height:30px}.results button{height:25px}.betline{padding:3px 7px}.tools button{height:29px}}
+
+/* Report page */
+.page{flex:1;min-height:0;padding:7px 10px 7px;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.reportHero{height:62px;flex:0 0 62px;border:1px solid #1979b1;border-radius:14px;background:linear-gradient(135deg,#12395a,#0b243d);padding:8px 12px;display:flex;justify-content:space-between;align-items:center}
+.reportHero span{display:block;color:#8eb2ca;font-size:8px;font-weight:900;letter-spacing:.8px}.reportHero b{display:block;font-size:18px;margin-top:2px}.heroTotal{text-align:right}.heroTotal small{display:block;color:#9eb6c9;font-size:8px}.heroTotal strong{font-size:21px}
+.reportSplit{min-height:0;flex:1;display:grid;grid-template-columns:1fr 1fr;gap:6px;overflow:hidden}
+.reportCard{min-width:0;min-height:0;border:1px solid #315a75;border-radius:13px;background:#09233b;padding:7px;display:flex;flex-direction:column;overflow:hidden}
+.cardHead{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #284963;padding:2px 2px 6px;margin-bottom:5px}.cardHead b{display:block;font-size:11px}.cardHead small{display:block;color:#91a9bc;font-size:7px;margin-top:2px}.cardHead>span{font-size:9px;font-weight:900;padding:4px 6px;border-radius:6px;background:#123a58}
+.daySummary{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:5px}.daySummary div{background:#102e48;border-radius:7px;padding:5px;text-align:center}.daySummary small{display:block;color:#91aabd;font-size:7px}.daySummary b{font-size:13px}
+.dayList{overflow:auto;min-height:0;flex:1}.dayRow{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #203f58;padding:6px 3px;font-size:9px}.dayRow b{font-size:11px}.dayRow small{display:block;color:#8fa8bb;font-size:7px;margin-top:1px}.dayRow .cum{text-align:right;color:#b8d0df}
+.calcGrid{display:grid;grid-template-columns:1fr 1fr;gap:4px}.calcGrid label{font-size:7px;color:#94adc0;font-weight:800}.calcGrid label:nth-child(3){grid-column:1/2}.calcGrid input{display:block;width:100%;height:28px;margin-top:2px;border:1px solid #3d617a;border-radius:6px;background:#071b2e;color:#fff;padding:3px 6px;font-size:10px}.calcGrid button{height:28px;border:0;border-radius:6px;background:#15955a;color:#fff;font-size:9px;font-weight:900;align-self:end}
+.compoundResult{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:4px;margin:6px 0}.compoundResult div{background:#102f48;border-radius:7px;padding:5px;text-align:center}.compoundResult small{display:block;color:#8faabd;font-size:7px}.compoundResult b{font-size:10px}.compoundResult .final{background:#124b39}.compoundResult .final b{font-size:12px}
+.compoundTable{min-height:0;overflow:auto;border-top:1px solid #29475f}.compoundTable .ctrow{display:grid;grid-template-columns:42px 1fr 1fr;gap:3px;border-bottom:1px solid #203e55;padding:4px 2px;font-size:8px}.compoundTable .ctrow b:last-child{text-align:right}.compoundTable .cthead{color:#8faabd;font-weight:800}
+.bottomNav{height:50px;flex:0 0 50px;z-index:20;background:#071a2d;border-top:1px solid #2b4a62;display:grid;grid-template-columns:1fr 1fr;padding:5px 10px}.bottomNav button{border:1px solid transparent;border-radius:8px;background:transparent;color:#91a9bc;font-size:10px;font-weight:800}.bottomNav button span{display:block;font-size:8px;margin-top:1px}.bottomNav button.active{background:#123b59;color:#fff;border-color:#2d6b92}
+@media(max-width:700px){.reportSplit{grid-template-columns:1fr 1fr}.reportHero{height:56px;flex-basis:56px}.reportHero b{font-size:16px}.reportCard{padding:6px}.cardHead b{font-size:10px}.calcGrid input{height:27px}.compoundResult b{font-size:9px}.compoundResult .final b{font-size:11px}}
+@media(max-width:430px){.page{padding-left:7px;padding-right:7px}.reportSplit{gap:4px}.reportCard{padding:5px}.reportHero{padding:7px 9px}.dayRow{font-size:8px}.dayRow b{font-size:10px}.compoundTable .ctrow{font-size:7px}.calcGrid input{font-size:9px}.heroTotal strong{font-size:18px}}
 </style>
 </head>
 <body>
 <div id="app">
 <header>
 <button class="top" id="menu">☰</button>
-<div class="head"><b>Cycle Tracker</b><small>Quick Dashboard</small></div>
+<div class="head"><b id="pageTitle">Cycle Tracker</b><small id="pageSub">Quick Dashboard</small></div>
 <button class="top" id="about">⚙</button>
 </header>
 
@@ -120,6 +136,42 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 <button id="history">📜 History</button><button id="report">📊 Report</button><button id="more">☷ More</button>
 </section>
 </main>
+
+<main id="reportPage" class="page hide">
+<section class="reportHero">
+  <div><span>📊 REPORT</span><b>Cycle Report</b></div>
+  <div class="heroTotal"><small>कुल Completed Cycles</small><strong id="reportTotal">0</strong></div>
+</section>
+
+<section class="reportSplit">
+  <section class="reportCard dayCard">
+    <div class="cardHead"><div><b>📅 Day-wise History</b><small>हर तारीख पर पूरे हुए Cycles</small></div><span id="todayLabel">आज</span></div>
+    <div id="daySummary" class="daySummary"></div>
+    <div class="dayList" id="dayList"></div>
+  </section>
+
+  <section class="reportCard compoundCard">
+    <div class="cardHead"><div><b>📈 Compounding Calculator</b><small>हर Cycle पर चुने हुए % से compound</small></div><span>5%</span></div>
+    <div class="calcGrid">
+      <label>Starting Amount<input id="compoundStart" type="number" min="0" step="100" value="5000"></label>
+      <label>Profit / Cycle %<input id="compoundPct" type="number" min="0" step="0.1" value="5"></label>
+      <label>Number of Cycles<input id="compoundCycles" type="number" min="0" step="1" value="10"></label>
+      <button id="compoundCalc">Calculate</button>
+    </div>
+    <div class="compoundResult">
+      <div><small>Starting</small><b id="compoundStartOut">₹5,000</b></div>
+      <div><small>Cycles</small><b id="compoundCyclesOut">10</b></div>
+      <div class="final"><small>Final Amount</small><b id="compoundFinal">₹8,144.47</b></div>
+    </div>
+    <div class="compoundTable" id="compoundTable"></div>
+  </section>
+</section>
+</main>
+
+<nav class="bottomNav">
+ <button id="navHome" class="active">🏠<span>Home</span></button>
+ <button id="navReport">📊<span>Report</span></button>
+</nav>
 </div>
 
 <div class="modal hide" id="dialogModal">
@@ -230,7 +282,7 @@ function lossSound(){
 
 async function finish(reason,type){
  s.running=false;
- s.history.unshift({cycle:s.cycle,date:new Date().toLocaleString('hi-IN'),start:s.startBalance,end:s.balance,profit:s.profit,loss:s.loss,targetPct:s.targetPct,lossPct:s.lossPct,betPct:s.betPct,reason});
+ s.history.unshift({cycle:s.cycle,date:new Date().toLocaleString('hi-IN'),dayKey:indiaDate(),start:s.startBalance,end:s.balance,profit:s.profit,loss:s.loss,targetPct:s.targetPct,lossPct:s.lossPct,betPct:s.betPct,reason});
  s.cycle++;save();
  if(type==='win')targetSound();else lossSound();
  await popup(type==='win'?'🎉':'🛑',type==='win'?'TARGET HIT':'STOP LOSS',reason+`\n\nBalance: ${money(s.balance)}\nProfit: ${money(s.profit)}\nLoss: ${money(s.loss)}`);
@@ -271,6 +323,49 @@ $('about').onclick=()=>sheet('Home Settings','<div class="row">Profit Target, St
 $('menu').onclick=()=>sheet('How it works','<div class="row"><b>Profit Target:</b> Cycle तब तक चलता है जब तक कुल profit चुने हुए प्रतिशत तक नहीं पहुँचता।</div><div class="row"><b>Stop Loss:</b> Cycle तब तक चलता है जब तक कुल loss चुनी सीमा तक नहीं पहुँचता।</div><div class="row"><b>Bet %:</b> यह केवल calculated bet दिखाता है। Manual result buttons इससे अलग हैं।</div>');
 $('closeSheet').onclick=closeSheet;
 $('sheetModal').onclick=e=>{if(e.target.id==='sheetModal')closeSheet()};
+
+function indiaDate(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
+function formatDay(key){try{return new Intl.DateTimeFormat('hi-IN',{timeZone:'Asia/Kolkata',day:'2-digit',month:'short',year:'numeric'}).format(new Date(key+'T00:00:00+05:30'))}catch(e){return key}}
+function historyDayKey(h){
+  if(h.dayKey)return h.dayKey;
+  try{const d=new Date(h.date);return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).format(d)}catch(e){return h.date}
+}
+function renderReport(){
+  const groups={};
+  s.history.forEach(h=>{const k=historyDayKey(h);(groups[k]||(groups[k]=[])).push(h)});
+  const keys=Object.keys(groups).sort().reverse();
+  const total=s.history.length;
+  $('reportTotal').textContent=total;
+  $('todayLabel').textContent='आज · '+formatDay(indiaDate());
+  const today=indiaDate();
+  const todayCount=(groups[today]||[]).length;
+  let cumulative=0;
+  const ordered=[...keys].sort();
+  const cumMap={}; ordered.forEach(k=>{cumulative+=(groups[k]||[]).length;cumMap[k]=cumulative});
+  $('daySummary').innerHTML=`<div><small>आज पूरे हुए</small><b>${todayCount}</b></div><div><small>कुल पूरे हुए</small><b>${total}</b></div>`;
+  if(!keys.length){$('dayList').innerHTML='<div class="dayRow"><span>अभी कोई completed cycle नहीं है।</span></div>';}
+  else $('dayList').innerHTML=keys.map(k=>`<div class="dayRow"><div><b>${formatDay(k)}</b><small>${k===today?'आज':''}</small></div><div><b>${groups[k].length} Cycles</b><small class="cum">Cumulative: ${cumMap[k]}</small></div></div>`).join('');
+  calculateCompound();
+}
+function calculateCompound(){
+  let start=Math.max(0,Number($('compoundStart').value)||0);
+  let pct=Math.max(0,Number($('compoundPct').value)||0);
+  let cycles=Math.max(0,Math.floor(Number($('compoundCycles').value)||0));
+  let amount=start; const rows=[];
+  rows.push(`<div class="ctrow cthead"><span>Cycle</span><span>Amount</span><b>Profit</b></div>`);
+  const step=Math.max(1,Math.ceil(cycles/20));
+  for(let i=1;i<=cycles;i++){const before=amount;amount=amount*(1+pct/100);if(i<=10||i===cycles||i%step===0)rows.push(`<div class="ctrow"><span>${i}</span><span>${money2(amount)}</span><b>+${money2(amount-before)}</b></div>`)}
+  $('compoundStartOut').textContent=money2(start);$('compoundCyclesOut').textContent=cycles;$('compoundFinal').textContent=money2(amount);$('compoundTable').innerHTML=rows.join('');
+}
+function money2(n){return '₹'+Number(n).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2})}
+function showHome(){
+ $('home').classList.remove('hide');$('reportPage').classList.add('hide');$('navHome').classList.add('active');$('navReport').classList.remove('active');$('pageTitle').textContent='Cycle Tracker';$('pageSub').textContent='Quick Dashboard';
+}
+function showReport(){
+ $('home').classList.add('hide');$('reportPage').classList.remove('hide');$('navHome').classList.remove('active');$('navReport').classList.add('active');$('pageTitle').textContent='Cycle Report';$('pageSub').textContent='History + Compounding';renderReport();
+}
+$('navHome').onclick=showHome;$('navReport').onclick=showReport;$('compoundCalc').onclick=calculateCompound;
+['compoundStart','compoundPct','compoundCycles'].forEach(id=>$(id).addEventListener('input',calculateCompound));
 
 draw();
 </script>
