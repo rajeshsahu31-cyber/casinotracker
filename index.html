@@ -213,8 +213,9 @@ let s=JSON.parse(localStorage.getItem(KEY)||'null')||JSON.parse(JSON.stringify(D
 const $=id=>document.getElementById(id);
 const money=n=>'₹'+Math.round(n).toLocaleString('en-IN');
 const roundBet=()=>Math.max(100,Math.ceil((s.balance*s.betPct/100)/100)*100);
-const targetAmount=()=>s.startBalance*s.targetPct/100;
-const lossAmount=()=>s.startBalance*s.lossPct/100;
+const cycleBaseBalance=()=>s.running?s.startBalance:s.balance;
+const targetAmount=()=>cycleBaseBalance()*s.targetPct/100;
+const lossAmount=()=>cycleBaseBalance()*s.lossPct/100;
 
 function save(){localStorage.setItem(KEY,JSON.stringify(s));draw()}
 function todayCompletedCount(){
