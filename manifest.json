@@ -1,9 +1,1 @@
-{
-  "name":"Cycle Tracker",
-  "short_name":"Cycle Tracker",
-  "start_url":"./",
-  "display":"standalone",
-  "background_color":"#031426",
-  "theme_color":"#06284f",
-  "lang":"hi"
-}
+{"name":"Cycle Tracker","short_name":"Cycle Tracker","start_url":"./","display":"standalone","background_color":"#031426","theme_color":"#06284f","lang":"hi"}
