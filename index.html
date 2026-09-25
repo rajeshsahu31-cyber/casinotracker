@@ -2,84 +2,75 @@
 <html lang="hi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#111827">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#071a31">
 <link rel="manifest" href="manifest.json">
 <title>Cycle Tracker</title>
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<div class="app">
-  <header>
-    <button class="icon" id="menuBtn">☰</button>
-    <div><div class="brand">Cycle Tracker</div><div class="sub">Quick Dashboard</div></div>
-    <button class="icon" id="settingsBtn">⚙</button>
-  </header>
+<div id="app">
+<header>
+  <button class="topbtn" id="menuBtn">☰</button>
+  <div class="title"><b>Cycle Tracker</b><span>Quick Dashboard</span></div>
+  <button class="topbtn" id="settingsBtn">⚙</button>
+</header>
 
-  <main class="dashboard">
-    <section class="balance card">
-      <div class="label">CURRENT BALANCE</div>
-      <div class="money" id="balance">₹5,000</div>
-      <div class="mini">Cycle <b id="cycle">1</b> • <span id="status">Stopped</span></div>
-    </section>
+<main id="home">
+  <section class="balance">
+    <div class="caption">CURRENT BALANCE</div>
+    <div class="amount" id="balance">₹5,000</div>
+    <div class="cycleline">Cycle <b id="cycle">1</b> · <b id="status">Stopped</b></div>
+  </section>
 
-    <section class="targets grid2">
-      <div class="card compact"><span>🎯 Peak / Target</span><b id="peak">₹5,000</b></div>
-      <div class="card compact"><span>🛑 Stop Loss</span><b id="stop">₹250</b></div>
-      <div class="card compact"><span>⚡ Safety Cap</span><b id="cap">₹100</b></div>
-      <div class="card compact"><span>📈 Progress</span><b id="progressText">0%</b></div>
-    </section>
+  <section class="infoGrid">
+    <div><span>🎯 Peak / Target</span><b id="peak">₹5,000</b></div>
+    <div><span>🛑 Stop Loss</span><b id="stop">₹250</b></div>
+    <div><span>⚡ Safety Cap</span><b id="cap">₹100</b></div>
+    <div><span>📈 Progress</span><b id="progressText">0%</b></div>
+  </section>
 
-    <section class="stats grid3">
-      <div><span>Highest</span><b id="highest">₹5,000</b></div>
-      <div><span>Profit</span><b id="profit">₹0</b></div>
-      <div><span>Loss</span><b id="loss">₹0</b></div>
-    </section>
+  <section class="stats">
+    <div><span>Highest</span><b id="highest">₹5,000</b></div>
+    <div><span>Profit</span><b id="profit">₹0</b></div>
+    <div><span>Loss</span><b id="loss">₹0</b></div>
+  </section>
 
-    <section class="progress card"><div id="bar"></div></section>
+  <div class="progress"><i id="bar"></i></div>
 
-    <section class="actions grid2">
-      <button class="primary" id="startBtn">▶ Start Cycle</button>
-      <button class="danger" id="stopBtn">■ Stop Cycle</button>
-    </section>
+  <section class="cycleBtns">
+    <button class="start" id="startBtn">▶ Start Cycle</button>
+    <button class="stop" id="stopBtn">■ Stop Cycle</button>
+  </section>
 
-    <section class="results">
-      <div class="section-title">Quick Result</div>
-      <div class="grid6">
-        <button data-amt="100">+₹100</button><button data-amt="200">+₹200</button><button data-amt="500">+₹500</button>
-        <button data-amt="-100">−₹100</button><button data-amt="-200">−₹200</button><button data-amt="-500">−₹500</button>
-      </div>
-    </section>
+  <section class="quick">
+    <div class="label">QUICK RESULT</div>
+    <div class="resultGrid">
+      <button data-amt="100">+100</button><button data-amt="200">+200</button><button data-amt="500">+500</button>
+      <button data-amt="-100">−100</button><button data-amt="-200">−200</button><button data-amt="-500">−500</button>
+    </div>
+  </section>
 
-    <section class="tools grid4">
-      <button id="historyBtn">📜<small>History</small></button>
-      <button id="reportBtn">📊<small>Report</small></button>
-      <button id="cooldownBtn">⏳<small>Cooldown</small></button>
-      <button id="reminderBtn">🔔<small>Reminder</small></button>
-    </section>
+  <section class="homeTools">
+    <button id="historyBtn">📜 <span>History</span></button>
+    <button id="reportBtn">📊 <span>Report</span></button>
+    <button id="moreBtn">☷ <span>More</span></button>
+  </section>
 
-    <section class="calculator card">
-      <div class="section-title">🧮 Compounding Calculator</div>
-      <div class="calcrow">
-        <input id="calcStart" type="number" placeholder="Start ₹" value="5000">
-        <input id="calcRate" type="number" placeholder="% / cycle" value="5">
-        <input id="calcCycles" type="number" placeholder="Cycles" value="10">
-        <button id="calcBtn">Calculate</button>
-      </div>
-      <div class="calcresult" id="calcResult">—</div>
-    </section>
+  <section class="hint">
+    <span>Cycle control</span>
+    <b>Target = Peak</b>
+    <small>Safety cap: 1% balance, rounded up to ₹100</small>
+  </section>
+</main>
 
-    <section class="bottom-actions">
-      <button class="outline" id="clearHistoryBtn">🗑️ Clear History</button>
-      <button class="outline reset" id="resetBtn">♻️ Reset App</button>
-    </section>
-  </main>
+<div class="modal hidden" id="modal">
+ <div class="modalBox">
+  <div class="modalHead"><b id="modalTitle">Details</b><button id="closeModal">×</button></div>
+  <div id="modalBody"></div>
+ </div>
 </div>
 
-<div class="modal hidden" id="modal"><div class="modalbox">
-  <div class="modalhead"><b id="modalTitle">Details</b><button id="closeModal">×</button></div>
-  <div id="modalBody"></div>
-</div></div>
 <script src="assets/js/app.js"></script>
 </body>
 </html>
