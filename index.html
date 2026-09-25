@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Cycle Tracker</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="menu">☰</div><div class="logo">📈</div>
+  <div><h1>Cycle Tracker</h1><p>खेलो सोच-समझकर, रुकना है ज़रूरी</p></div>
+  <div class="header-actions"><button class="btn">📊 रिपोर्ट</button><button class="btn">⚙ सेटिंग्स</button></div>
+</header>
+
+<section class="grid-top">
+  <div class="card balance"><div class="card-title">💳 वर्तमान बैलेंस ✎</div><div class="big" id="balance">₹ 5,000</div><div class="small">📅 आज का सेशन: <b id="status">नहीं चला रहा</b></div></div>
+  <div class="card target"><div class="card-title">🎯 अगला साइकिल लक्ष्य</div><div class="big" id="cycleTarget">₹ 5,565</div><div class="small">Peak ₹ 5,300 + अगला 5%</div></div>
+  <div class="card stop"><div class="card-title">🛡️ स्टॉप-लॉस</div><div class="big">5%</div><div class="small" id="stopMoney">(₹ 250)</div></div>
+</section>
+
+<section class="stats">
+ <div class="stat"><div class="label">🪙 बेट लिमिट (1% रूल)</div><div class="value" id="betLimit">₹ 100</div><div>बैलेंस का 1% → अगले 100 तक</div></div>
+ <div class="stat"><div class="label">🏆 आज की सबसे ऊँची राशि (Peak)</div><div class="value green" id="peakBalance">₹ 5,000</div><div>जहाँ तक आप पहुँच चुके हैं</div></div>
+ <div class="stat"><div class="label">🎯 Peak से अगला लक्ष्य</div><div class="value" id="peakNextTarget">₹ 5,250</div><div>Peak + 5% अगला लक्ष्य</div></div>
+</section>
+
+<section class="main">
+ <div class="ring" id="ring"><div class="ring-inner"><div><div class="cycle">साइकिल 1</div><div class="percent" id="progress">0%</div><div class="targettext">लक्ष्य: 5% (<span id="target2">₹ 250</span>)<br>शेष: <span id="remain">₹ 250</span></div></div></div></div>
+ <div>
+   <div class="summary">
+    <div>🚩<span>प्रॉफिट</span><b class="green" id="cycleProfit">₹ 0</b></div>
+    <div>🚩<span>लॉस</span><b class="red" id="cycleLoss">₹ 0</b></div>
+    <div>🎲<span>कुल बेट</span><b id="bets">0</b><small>(Max: <span id="betMax">₹100</span>)</small></div>
+   </div>
+   <div class="controls"><button class="start" onclick="startCycle()">▶ साइकिल शुरू करें</button><button class="end" onclick="stopCycle()">■ साइकिल बंद करें</button></div>
+   <div class="adjust"><div class="adjust-title">प्रॉफिट/लॉस जोड़ें</div>
+    <div class="adjust-buttons">
+      <button class="plus" onclick="result(100)">+ ₹100</button><button class="plus" onclick="result(200)">+ ₹200</button><button class="plus" onclick="result(500)">+ ₹500</button>
+      <button class="minus" onclick="result(-100)">− ₹100</button><button class="minus" onclick="result(-200)">− ₹200</button><button class="minus" onclick="result(-500)">− ₹500</button>
+    </div>
+   </div>
+ </div>
+</section>
+
+<section class="compound">
+ <h2>🧮 कंपाउंडिंग कैलकुलेटर <small>(अनुमानित प्रोजेक्शन)</small></h2>
+ <div class="inputs">
+  <div><label>शुरुआती राशि (₹)</label><input id="start" value="5000" type="number"></div>
+  <div><label>प्रति साइकिल प्रॉफिट (%)</label><input id="rate" value="5" type="number" step="0.1"></div>
+  <div><label>कितनी साइकिल</label><input id="cycles" value="10" type="number"></div>
+  <button class="calc" onclick="calculate()">🧮 गणना करें</button>
+ </div>
+ <div class="table-wrap"><table><thead><tr><th>साइकिल</th><th>शुरुआती राशि (₹)</th><th>प्रॉफिट (%)</th><th>अंतिम राशि (₹)</th></tr></thead><tbody id="table"></tbody></table></div>
+ <div class="result"><div>📈 अनुमान</div><div class="rbox">अंतिम राशि<br><strong id="final">₹ 8,144</strong></div><div class="rbox">कुल प्रॉफिट (अनुमानित)<br><strong id="totalProfit">₹ 3,144</strong></div><div class="warn">⚠ यह केवल गणितीय अनुमान है, वास्तविक परिणाम अलग हो सकते हैं।</div></div>
+</section>
+
+<section class="tiles">
+ <div class="tile t1"><span>◷</span>सेशन हिस्ट्री<br><small>पिछले सभी साइकिल देखें</small></div>
+ <div class="tile t2"><span>▥</span>डेली/वीकली रिपोर्ट<br><small>आपकी प्रोग्रेस देखें</small></div>
+ <div class="tile t3"><span>Ⅱ</span>कूलडाउन<br><small>जब ज़रूरत हो, ब्रेक लें</small></div>
+ <div class="tile t4"><span>✓</span>रिमाइंडर<br><small>डिसिप्लिन बनाए रखें</small></div>
+</section>
+</div>
+
+<div class="overlay" id="overlay"><div class="modal"><h2 id="modalTitle">STOP</h2><p id="modalText"></p><button onclick="closeModal()">समझ गया</button></div></div>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
