@@ -83,7 +83,7 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 <section class="balance">
 <div class="caption">CURRENT BALANCE</div>
 <div class="amount" id="balance">₹5,000</div>
-<div class="cycle">Cycle <b id="cycle">1</b> · <b id="status">Stopped</b></div>
+<div class="cycle">Cycle <b id="cycle">1</b> · <b id="status">नया Cycle शुरू करें</b> · <b id="completedCount">0 Completed</b></div>
 </section>
 
 <section class="settingsGrid">
@@ -204,7 +204,8 @@ function save(){localStorage.setItem(KEY,JSON.stringify(s));draw()}
 function draw(){
  $('balance').textContent=money(s.balance);
  $('cycle').textContent=s.cycle;
- $('status').textContent=s.running?'Running':'Stopped';
+ $('status').textContent=s.running?'Running':'नया Cycle शुरू करें';
+ $('completedCount').textContent=s.history.length+' Completed';
  $('targetPct').value=s.targetPct;$('lossPct').value=s.lossPct;$('betPct').value=s.betPct;
  $('targetAmt').textContent=money(targetAmount());$('lossAmt').textContent=money(lossAmount());
  $('betAmt').textContent=money(roundBet());
@@ -212,8 +213,12 @@ function draw(){
  $('lossLeft').textContent=money(Math.max(0,lossAmount()-s.loss));
  $('betNow').textContent=money(roundBet());$('betDisplay').textContent=money(roundBet());
  $('highest').textContent=money(s.peak);$('profit').textContent=money(s.profit);$('loss').textContent=money(s.loss);
- const p=targetAmount()?Math.min(100,s.profit/targetAmount()*100):0;
- $('pct').textContent=Math.round(p)+'%';$('bar').style.width=p+'%';
+ const target=targetAmount();
+ const achievedPct=target?Math.min(s.targetPct,s.profit/s.startBalance*100):0;
+ const remainingPct=Math.max(0,s.targetPct-achievedPct);
+ const p=target?Math.min(100,s.profit/target*100):0;
+ $('pct').textContent=Math.round(achievedPct*100)/100+'% / '+Math.round(remainingPct*100)/100+'% बाकी';
+ $('bar').style.width=p+'%';
 }
 
 /* Beautiful custom popup: no browser alert/confirm */
@@ -281,11 +286,30 @@ function lossSound(){
 }
 
 async function finish(reason,type){
+ const completedCycle=s.cycle;
  s.running=false;
- s.history.unshift({cycle:s.cycle,date:new Date().toLocaleString('hi-IN'),dayKey:indiaDate(),start:s.startBalance,end:s.balance,profit:s.profit,loss:s.loss,targetPct:s.targetPct,lossPct:s.lossPct,betPct:s.betPct,reason});
- s.cycle++;save();
+ s.history.unshift({cycle:completedCycle,date:new Date().toLocaleString('hi-IN'),dayKey:indiaDate(),start:s.startBalance,end:s.balance,profit:s.profit,loss:s.loss,targetPct:s.targetPct,lossPct:s.lossPct,betPct:s.betPct,reason});
+ const completedCount=s.history.length;
+ s.cycle++;
+ save();
  if(type==='win')targetSound();else lossSound();
- await popup(type==='win'?'🎉':'🛑',type==='win'?'TARGET HIT':'STOP LOSS',reason+`\n\nBalance: ${money(s.balance)}\nProfit: ${money(s.profit)}\nLoss: ${money(s.loss)}`);
+ const title=type==='win'?'🎉 Cycle Completed':'🛑 Cycle Stopped';
+ const text=type==='win'
+   ? `Cycle ${completedCycle} Completed
+
+आपने ${completedCount} Cycle पूरे कर लिए हैं।
+
+आज के पूरे हुए Cycles: ${s.history.filter(h=>historyDayKey(h)===indiaDate()).length}
+Balance: ${money(s.balance)}
+Profit: ${money(s.profit)}`
+   : `Cycle ${completedCycle} का Stop Loss पूरा हो गया।
+
+यह Cycle समाप्त हो गया है।
+कुल Completed Cycles: ${completedCount}
+
+Balance: ${money(s.balance)}
+Loss: ${money(s.loss)}`;
+ await popup(type==='win'?'🎉':'🛑',title,text);
 }
 
 function addResult(a){
@@ -344,7 +368,7 @@ function renderReport(){
   const cumMap={}; ordered.forEach(k=>{cumulative+=(groups[k]||[]).length;cumMap[k]=cumulative});
   $('daySummary').innerHTML=`<div><small>आज पूरे हुए</small><b>${todayCount}</b></div><div><small>कुल पूरे हुए</small><b>${total}</b></div>`;
   if(!keys.length){$('dayList').innerHTML='<div class="dayRow"><span>अभी कोई completed cycle नहीं है।</span></div>';}
-  else $('dayList').innerHTML=keys.map(k=>`<div class="dayRow"><div><b>${formatDay(k)}</b><small>${k===today?'आज':''}</small></div><div><b>${groups[k].length} Cycles</b><small class="cum">Cumulative: ${cumMap[k]}</small></div></div>`).join('');
+  else $('dayList').innerHTML=keys.map(k=>`<div class="dayRow"><div><b>${formatDay(k)}</b><small>${k===today?'आज':''}</small></div><div><b>${groups[k].length} Cycles</b><small class="cum">कुल अब तक: ${cumMap[k]}</small></div></div>`).join('');
   calculateCompound();
 }
 function calculateCompound(){
