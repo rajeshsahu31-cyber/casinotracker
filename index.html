@@ -16,7 +16,7 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 .head{text-align:center;line-height:1.05;white-space:nowrap}.head b{font-size:18px}.head small{display:block;color:#9db3c8;font-size:9px;margin-top:2px}
 #home{flex:1;min-height:0;padding:6px 10px 7px;display:grid;grid-template-rows:auto auto auto auto auto auto auto auto;gap:5px;overflow:hidden}
 .balance{min-height:72px;border:1px solid #00a9ff;border-radius:18px;background:linear-gradient(135deg,#00b947,#00d963);padding:8px 15px;display:flex;flex-direction:column;justify-content:center}
-.caption{font-size:9px;font-weight:800;letter-spacing:.8px}.amount{font-size:27px;font-weight:900;line-height:1.05}.cycle{font-size:10px;margin-top:2px}
+.caption{font-size:9px;font-weight:800;letter-spacing:.8px}.amount{font-size:27px;font-weight:900;line-height:1.05}.cycle{font-size:12px;margin-top:3px;font-weight:800}.cycleGuide{font-size:9px;margin-top:2px;color:rgba(255,255,255,.9);font-weight:700}
 .settingsGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
 .set{border:1px solid #078fe0;border-radius:11px;background:#09253e;padding:5px 6px;min-width:0}
 .set label{display:block;color:#9eb6ca;font-size:8px;font-weight:800;margin-bottom:3px;white-space:nowrap}
@@ -24,13 +24,13 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 .set b{display:block;text-align:center;font-size:11px;margin-top:3px;color:#fff}
 .info{display:grid;grid-template-columns:1fr 1fr;gap:4px}
 .info div{height:30px;border:1px solid #078fe0;border-radius:11px;background:#09253e;padding:4px 8px;display:flex;justify-content:space-between;align-items:center}
-.info span{font-size:9px;white-space:nowrap}.info b{font-size:11px;white-space:nowrap}
+.info span{font-size:9px;white-space:nowrap}.info b{font-size:11px;white-space:nowrap}.subInfo{grid-template-columns:1fr 1fr}.subInfo div{height:28px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
 .stats div{height:38px;background:#112940;border:1px solid #2d4d68;border-radius:9px;text-align:center;padding:4px}
 .stats span{display:block;color:#9eb4c8;font-size:8px}.stats b{font-size:12px}
 .progress{height:5px;background:#18344d;border-radius:7px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:#21d16b}
-.cycles{display:grid;grid-template-columns:1fr 1fr;gap:5px}.cycles button{height:34px;border:0;border-radius:8px;color:#fff;font-size:12px;font-weight:800}
-.start{background:#10b957}.stop{background:#ef3047}
+.cycles{display:grid;grid-template-columns:1fr 1fr;gap:5px}.cycles button{height:34px;border:0;border-radius:8px;color:#fff;font-size:11px;font-weight:800;position:relative;overflow:hidden;transition:transform .15s,box-shadow .2s}.cycles button:disabled{opacity:.82;cursor:default}.cycles .start:not(:disabled){animation:startPulse 1.7s ease-in-out infinite;box-shadow:0 0 0 0 rgba(16,185,87,.55)}.cycles .stop:not(:disabled){animation:stopPulse 1.7s ease-in-out infinite;box-shadow:0 0 0 0 rgba(239,48,71,.5)}.cycles .start.running{animation:none;box-shadow:none}.cycles button:active{transform:scale(.98)}@keyframes startPulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,87,.45)}50%{box-shadow:0 0 0 6px rgba(16,185,87,0)}}@keyframes stopPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,48,71,.4)}50%{box-shadow:0 0 0 6px rgba(239,48,71,0)}}
+.start{background:#10b957}.start.running{background:#087d3b}.stop{background:#ef3047}.stop:disabled{background:#6d2731;opacity:.55}
 .quick .qt{font-size:8px;color:#9eb5c9;font-weight:800;margin:0 0 3px 2px}
 .results{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
 .results button{height:29px;border:1px solid #476780;border-radius:6px;background:#112a42;color:#fff;font-size:9px;font-weight:800}
@@ -52,7 +52,7 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 .x{width:31px;height:29px;border:1px solid #55758f;border-radius:6px;background:#162f48;color:#fff;font-size:19px}
 .row{padding:6px 2px;border-bottom:1px solid #29455d;font-size:10px;line-height:1.35}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:7px}.mgrid button{height:34px;border:1px solid #476780;border-radius:7px;background:#142e47;color:#fff;font-size:10px;font-weight:800}.danger{background:#5a202a!important;border-color:#aa4a55!important}
-@media(max-height:680px){header{height:46px;flex-basis:46px}.top{height:32px;width:35px}.head b{font-size:16px}#home{gap:3px;padding:4px 8px}.balance{min-height:62px;padding:5px 12px}.amount{font-size:23px}.set{padding:4px 5px}.set select{height:25px}.info div{height:27px}.stats div{height:33px}.cycles button{height:30px}.results button{height:25px}.betline{padding:3px 7px}.tools button{height:29px}}
+@media(max-height:680px){header{height:46px;flex-basis:46px}.top{height:32px;width:35px}.head b{font-size:16px}#home{gap:3px;padding:4px 8px}.balance{min-height:62px;padding:5px 12px}.amount{font-size:23px}.set{padding:4px 5px}.set select{height:25px}.info div{height:27px}.stats div{height:33px}.cycles button{height:30px}.results button{height:25px}.betline{padding:3px 7px}.tools button{height:29px}.cycle{font-size:10px}.cycleGuide{font-size:8px}.subInfo div{height:26px}}
 
 /* Report page */
 .page{flex:1;min-height:0;padding:7px 10px 7px;overflow:hidden;display:flex;flex-direction:column;gap:6px}
@@ -83,7 +83,8 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 <section class="balance">
 <div class="caption">CURRENT BALANCE</div>
 <div class="amount" id="balance">₹5,000</div>
-<div class="cycle">Cycle <b id="cycle">1</b> · <b id="status">नया Cycle शुरू करें</b> · <b id="completedCount">0 Completed</b></div>
+<div class="cycle" id="cycleStatusLine">▶ <b id="cycleActionText">Cycle 1 शुरू करें</b></div>
+<div class="cycleGuide" id="cycleGuide">अभी कोई Cycle शुरू नहीं है। पहले Cycle शुरू करें।</div>
 </section>
 
 <section class="settingsGrid">
@@ -99,10 +100,14 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 </section>
 
 <section class="info">
-<div><span>🎯 Target Left</span><b id="targetLeft">₹250</b></div>
+<div><span>🎯 Target</span><b id="targetInfo">₹250</b></div>
+<div><span>✅ Achieved</span><b id="achievedInfo">₹0</b></div>
+<div><span>↘️ Remaining</span><b id="remainingInfo">₹250</b></div>
+<div><span>📈 Progress</span><b id="pct">0%</b></div>
+</section>
+<section class="info subInfo">
 <div><span>🛑 Loss Left</span><b id="lossLeft">₹250</b></div>
 <div><span>⚡ Calculated Bet</span><b id="betNow">₹100</b></div>
-<div><span>📈 Progress</span><b id="pct">0%</b></div>
 </section>
 
 <section class="stats">
@@ -194,6 +199,16 @@ header{height:52px;flex:0 0 52px;display:grid;grid-template-columns:42px 1fr 42p
 const KEY='cycle_tracker_final_v4';
 const DEF={balance:5000,peak:5000,cycle:1,running:false,startBalance:5000,targetPct:5,lossPct:5,betPct:1,profit:0,loss:0,history:[]};
 let s=JSON.parse(localStorage.getItem(KEY)||'null')||JSON.parse(JSON.stringify(DEF));
+// Repair older saved data: the next Cycle must always be one higher than the
+// highest completed Cycle already present in History.
+(function normalizeSavedState(){
+  s.history=Array.isArray(s.history)?s.history:[];
+  const maxCompleted=s.history.reduce((m,h)=>Math.max(m,Number(h.cycle)||0),0);
+  if(maxCompleted>0 && (!Number.isFinite(Number(s.cycle)) || Number(s.cycle)<=maxCompleted)) s.cycle=maxCompleted+1;
+  s.cycle=Math.max(1,Number(s.cycle)||1);
+  if(Number(s.balance)>Number(s.peak||0)) s.peak=Number(s.balance);
+  localStorage.setItem(KEY,JSON.stringify(s));
+})();
 const $=id=>document.getElementById(id);
 const money=n=>'₹'+Math.round(n).toLocaleString('en-IN');
 const roundBet=()=>Math.max(100,Math.ceil((s.balance*s.betPct/100)/100)*100);
@@ -204,12 +219,12 @@ function save(){localStorage.setItem(KEY,JSON.stringify(s));draw()}
 function draw(){
  $('balance').textContent=money(s.balance);
  $('cycle').textContent=s.cycle;
- $('status').textContent=s.running?'Running':'नया Cycle शुरू करें';
- $('completedCount').textContent=s.history.length+' Completed';
  $('targetPct').value=s.targetPct;$('lossPct').value=s.lossPct;$('betPct').value=s.betPct;
  $('targetAmt').textContent=money(targetAmount());$('lossAmt').textContent=money(lossAmount());
  $('betAmt').textContent=money(roundBet());
- $('targetLeft').textContent=money(Math.max(0,targetAmount()-s.profit));
+ $('targetInfo').textContent=money(targetAmount());
+ $('achievedInfo').textContent=money(Math.min(s.profit,targetAmount()));
+ $('remainingInfo').textContent=money(Math.max(0,targetAmount()-s.profit));
  $('lossLeft').textContent=money(Math.max(0,lossAmount()-s.loss));
  $('betNow').textContent=money(roundBet());$('betDisplay').textContent=money(roundBet());
  $('highest').textContent=money(s.peak);$('profit').textContent=money(s.profit);$('loss').textContent=money(s.loss);
@@ -217,8 +232,20 @@ function draw(){
  const achievedPct=target?Math.min(s.targetPct,s.profit/s.startBalance*100):0;
  const remainingPct=Math.max(0,s.targetPct-achievedPct);
  const p=target?Math.min(100,s.profit/target*100):0;
- $('pct').textContent=Math.round(achievedPct*100)/100+'% / '+Math.round(remainingPct*100)/100+'% बाकी';
+ $('pct').textContent=achievedPct.toFixed(1)+'% पूरा / '+remainingPct.toFixed(1)+'% बाकी';
  $('bar').style.width=p+'%';
+ const startBtn=$('start'), stopBtn=$('stopBtn');
+ if(s.running){
+   $('cycleActionText').textContent='Cycle '+s.cycle+' चल रहा है';
+   $('cycleGuide').textContent='Target तक पहुँचने तक Cycle जारी है। Result buttons से progress बढ़ेगी।';
+   startBtn.textContent='🟢 Cycle '+s.cycle+' चल रहा है'; startBtn.disabled=true; startBtn.classList.add('running');
+   stopBtn.disabled=false; stopBtn.textContent='■ Stop Cycle (Loss / Manual)';
+ }else{
+   $('cycleActionText').textContent='Cycle '+s.cycle+' शुरू करें';
+   $('cycleGuide').textContent=s.history.length ? 'पिछला Cycle पूरा हो चुका है। आगे बढ़ने के लिए अगला Cycle शुरू करें।' : 'अभी कोई Cycle शुरू नहीं है। पहले Cycle शुरू करें।';
+   startBtn.textContent='▶ Cycle '+s.cycle+' शुरू करें'; startBtn.disabled=false; startBtn.classList.remove('running');
+   stopBtn.disabled=true; stopBtn.textContent='■ Stop Cycle (पहले Cycle शुरू करें)';
+ }
 }
 
 /* Beautiful custom popup: no browser alert/confirm */
@@ -295,20 +322,23 @@ async function finish(reason,type){
  if(type==='win')targetSound();else lossSound();
  const title=type==='win'?'🎉 Cycle Completed':'🛑 Cycle Stopped';
  const text=type==='win'
-   ? `Cycle ${completedCycle} Completed
+   ? `Cycle ${completedCycle} पूरा हो गया!
 
 आपने ${completedCount} Cycle पूरे कर लिए हैं।
 
-आज के पूरे हुए Cycles: ${s.history.filter(h=>historyDayKey(h)===indiaDate()).length}
-Balance: ${money(s.balance)}
-Profit: ${money(s.profit)}`
+Target: ${money(targetAmount())}
+Achieved: ${money(s.profit)}
+आज पूरे हुए Cycles: ${s.history.filter(h=>historyDayKey(h)===indiaDate()).length}
+
+अगर आगे जारी रखना चाहते हैं, तो Cycle ${s.cycle} शुरू करें।`
    : `Cycle ${completedCycle} का Stop Loss पूरा हो गया।
 
-यह Cycle समाप्त हो गया है।
+यह Cycle यहीं रोक दिया गया है।
 कुल Completed Cycles: ${completedCount}
 
-Balance: ${money(s.balance)}
-Loss: ${money(s.loss)}`;
+Loss: ${money(s.loss)}
+
+बाद में चाहें तो Cycle ${s.cycle} फिर से शुरू कर सकते हैं।`;
  await popup(type==='win'?'🎉':'🛑',title,text);
 }
 
